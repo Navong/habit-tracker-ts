@@ -1,0 +1,36 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "tsx index.ts",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "description": "",
+  "devDependencies": {
+    "@types/cors": "^2.8.18",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.18",
+    "@types/swagger-ui-express": "^4.1.8",
+    "dotenv": "^16.5.0",
+    "eslint": "^9.26.0",
+    "express": "^5.1.0",
+    "i": "^0.3.7",
+    "install": "^0.13.0",
+    "nodemon": "^3.1.10",
+    "npm": "^11.3.0",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "cron": "^4.3.0",
+    "mongoose": "^8.14.3",
+    "swagger-ui-express": "^5.0.1"
+  }
+}

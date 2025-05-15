@@ -1,0 +1,157 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Habit & Journal Tracker API",
+      "version": "1.0.0",
+      "description": "API documentation for the Habit & Journal Tracker"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "schemes": ["http"],
+    "paths": {
+      "/api/habits": {
+        "get": {
+          "summary": "Get all habits",
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "post": {
+          "summary": "Add a new habit",
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Habit object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Habit"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Created"
+            }
+          }
+        }
+      },
+      "/api/habits/{id}": {
+        "put": {
+          "summary": "Update a habit",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Habit object",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Habit"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "OK"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a habit",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Deleted"
+            }
+          }
+        }
+      },
+      "/api/habits/{id}/toggle": {
+        "put": {
+          "summary": "Toggle habit completion for a specific date",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "body",
+              "description": "Date object",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Toggled"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Journal": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "mood": {
+            "type": "string"
+          }
+        }
+      },
+      "Habit": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "completed_dates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,11 @@
+config:
+  target: "http://localhost:3000"  # Update with your actual API host
+  phases:
+    - duration: 60  # Run the test for 60 seconds
+      arrivalRate: 10  # 10 new virtual users per second
+
+scenarios:
+  - name: "Get all habits"
+    flow:
+      - get:
+          url: "/api/habits"
