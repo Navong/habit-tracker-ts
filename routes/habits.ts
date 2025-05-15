@@ -1,13 +1,14 @@
 import e, { Router } from "express";
 import { Request, Response } from "express";
 import { Habit } from "../models/habit";
-import { getHabits, createHabit, updateHabit, deleteHabit, toggleHabit } from "../controllers/habitController";
+import { getHabits, createHabit, updateHabit, deleteHabit, toggleHabit, createMultipleHabits } from "../controllers/habitController";
 
 const router = Router()
 
 
 router.get("/", getHabits)
 router.post("/", createHabit)
+router.post("/multi", createMultipleHabits)
 
 // edit habit
 router.put("/:id", updateHabit)

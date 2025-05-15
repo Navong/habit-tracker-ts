@@ -34,12 +34,49 @@ const createHabit = async (req: Request, res: Response) => {
 
         const habit = new Habit({ name, description, goal, category, completed_dates });
         await habit.save();
+
+        await redisClient.del('habits');
+
         res.status(201).json(habit);
 
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 }
+
+// create multiple habits
+const createMultipleHabits = async (req: Request, res: Response) => {
+    try {
+        const habits = req.body;
+
+        // console.log(habits);
+
+        if (!habits || !Array.isArray(habits)) {
+            res.status(400).json({ error: "Invalid input: 'habits' array is required." });
+            return;
+        }
+
+        // Validate each habit
+        const invalidHabit = habits.find(habit =>
+            !habit.name || !habit.goal || !habit.category
+        );
+
+        if (invalidHabit) {
+            res.status(400).json({ error: "Each habit must have 'name', 'goal', and 'category'." });
+            return;
+        }
+
+        const createdHabits = await Habit.insertMany(habits);
+
+        // Invalidate cache
+        await redisClient.del('habits');
+
+        res.status(201).json(createdHabits);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
 
 const updateHabit = async (req: Request, res: Response) => {
     try {
@@ -61,6 +98,9 @@ const updateHabit = async (req: Request, res: Response) => {
         habit.goal = goal;
         habit.category = category;
         await habit.save();
+
+        await redisClient.del('habits');
+
         res.json(habit);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -75,6 +115,9 @@ const deleteHabit = async (req: Request, res: Response) => {
             res.status(404).json({ error: "Habit not found" });
             return;
         }
+
+        await redisClient.del('habits');
+
         res.status(200).json({ message: `Habit ${habit.name} deleted successfully` });
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -116,6 +159,7 @@ const toggleHabit = async (req: Request, res: Response) => {
         }
 
         await habit.save();
+        await redisClient.del('habits');
         res.json(habit);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
@@ -127,5 +171,6 @@ export {
     createHabit,
     updateHabit,
     deleteHabit,
-    toggleHabit
+    toggleHabit,
+    createMultipleHabits
 }
