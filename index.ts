@@ -23,7 +23,7 @@ const limiter = rateLimit({
 // middlewares
 app.use(cors());
 app.use(express.json());
-app.use(limiter);
+// app.use(limiter);
 
 // swagger docs
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
