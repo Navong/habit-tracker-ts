@@ -35,6 +35,6 @@ app.use("/api/habits", habitsRouter);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     connectDB();
-    // job.start();
+    job.start();
     connectRedis();
 });
