@@ -7,8 +7,11 @@ import rateLimit from "express-rate-limit";
 import dotenv from "dotenv";
 import habitsRouter from "./routes/habits";
 import job from "./libs/cron";
+import { connectRedis } from "./libs/redis";
 
 dotenv.config();
+
+
 const app = express();
 const port = process.env.PORT;
 // Rate Limiting
@@ -19,7 +22,7 @@ const limiter = rateLimit({
 
 // middlewares
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 app.use(limiter);
 
 // swagger docs
@@ -32,5 +35,6 @@ app.use("/api/habits", habitsRouter);
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     connectDB();
-    job.start();
+    // job.start();
+    connectRedis();
 });
