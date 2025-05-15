@@ -14,6 +14,8 @@ const getHabits = async (req: Request, res: Response) => {
             habits = await Habit.find();
             await redisClient.set('habits', JSON.stringify(habits), { EX: 300 });
         }
+
+        // const habits = await Habit.find();
         res.json(habits);
     } catch (error: any) {
         res.status(500).json({ error: error.message });

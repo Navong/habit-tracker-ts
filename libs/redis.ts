@@ -16,7 +16,7 @@ export const connectRedis = async () => {
 
         await redisClient.connect();
         await redisClient.ping();
-        // await redisClient.flushAll();
+        await redisClient.flushAll();
 
     } catch (error) {
         console.error("Error connecting to Redis:", error);
